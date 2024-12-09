@@ -1,0 +1,9 @@
+protocol "MESI_Three_Level_PrepushAck_Bingo";
+include "RubySlicc_Prepush_interfaces.slicc";
+include "MESI_Two_Level_Prepush-msg.sm";
+include "MESI_Three_Level_Prepush-msg.sm";
+include "MESI_Three_Level_Prepush_Bingo-L0cache.sm";
+include "MESI_Three_Level_PrepushAck_Feedback_Restart_Ratio_Bingo-L1cache.sm";
+include "MESI_Two_Level_PrepushAck_Feedback_Restart_Ratio_Bingo-L2cache.sm";
+include "MESI_Two_Level-dir.sm";
+include "MESI_Two_Level-dma.sm";

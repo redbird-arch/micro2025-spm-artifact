@@ -1,0 +1,1 @@
+./nn.exe list256k.data.txt 5 30 90 4

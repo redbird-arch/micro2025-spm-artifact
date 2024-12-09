@@ -1,0 +1,15 @@
+# C++ compiler
+CC=clang++
+
+include ../GemForge.Makefile.include
+
+CC_FLAGS += ${GEM_FORGE_TOP}/gem5/util/m5/m5op_x86.S
+
+all: euler3d_cpu_double.exe
+
+euler3d_cpu_double.exe: euler3d_cpu_double.cpp
+	${CC} ${CC_FLAGS} $^ -o $@ -static -lm -lomp -ldl
+
+clean:
+	rm -f *.exe *.bc *.ll *.o output.txt
+

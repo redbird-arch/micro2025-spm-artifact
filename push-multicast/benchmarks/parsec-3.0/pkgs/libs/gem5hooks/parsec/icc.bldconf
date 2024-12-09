@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source ${PARSECDIR}/pkgs/libs/gem5hooks/parsec/gcc.bldconf
+

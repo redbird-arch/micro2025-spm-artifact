@@ -1,0 +1,15 @@
+# C++ compiler
+CC=clang++
+
+include ../GemForge.Makefile.include
+
+CC_FLAGS += ${GEM_FORGE_TOP}/gem5/util/m5/m5op_x86.S  -DGEM_FORGE_FIX_INPUT -DGEM_FORGE_FIX_INPUT_SIZE=1024 -mavx512f
+
+all: hotspot.exe
+
+hotspot.exe: hotspot.cpp
+	${CC} ${CC_FLAGS} $^ -o $@ -static -lm -lomp -ldl
+
+clean:
+	rm -f *.exe *.bc *.ll *.o output.txt
+

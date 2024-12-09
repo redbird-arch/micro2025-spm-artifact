@@ -1,0 +1,16 @@
+# C compiler
+CC=clang
+
+include ../GemForge.Makefile.include
+
+CC_FLAGS += ${GEM_FORGE_TOP}/gem5/util/m5/m5op_x86.S
+
+SOURCES=gem5_main.c impl.c kernel_query.c kernel_range.c timer.c num.c
+
+all: btree.exe
+
+btree.exe: ${SOURCES}
+	${CC} ${CC_FLAGS} $^ -o $@ -static -lm -lomp -ldl
+
+clean:
+	rm -f *.exe *.bc *.ll *.o output.txt

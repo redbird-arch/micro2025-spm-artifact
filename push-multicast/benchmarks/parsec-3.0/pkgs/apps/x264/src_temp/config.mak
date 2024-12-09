@@ -1,0 +1,20 @@
+prefix=/x264
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+ARCH=X86_64
+SYS=LINUX
+CC=mcc
+CFLAGS=-ffast-math --ompss  -O2 -g -funroll-loops -fprefetch-loop-arrays  -Wall -I. -DHAVE_MALLOC_H -DARCH_X86_64 -DSYS_LINUX -DHAVE_OMPSS
+MCFLAGS=--ompss  -O2 -g -funroll-loops -fprefetch-loop-arrays  -Wall -I. -DHAVE_MALLOC_H -DARCH_X86_64 -DSYS_LINUX -DHAVE_OMPSS
+ALTIVECFLAGS=
+LDFLAGS= -lm -lpthread
+AS=
+ASFLAGS=-f elf -m amd64
+EXE=-ompss
+VIS=no
+HAVE_GETOPT_LONG=1
+DEVNULL=/dev/null
+ECHON=echo -n
+CONFIGURE_ARGS= '--enable-ompss' '--disable-asm' '--prefix=/x264'

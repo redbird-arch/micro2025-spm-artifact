@@ -1,0 +1,20 @@
+# C compiler
+CC=gcc
+
+GEM5_INC=${BENCH_TOP}/../nuca-gem5/include
+GEM5_OPS=${BENCH_TOP}/../nuca-gem5/util/m5/src/abi/x86/m5op.S
+
+# sse, sse2, see3 generate the same as no passing flags; sse4.2 generates
+# `pinsrd_pinsrq_Vdq_Ed_or_Eq_Ib` that are not implemented in gem5 (although
+# it can run till the end and faster, the results are not verified). AVX
+# versions generate `vpinsrq` that is not supported in gem5.
+CC_FLAGS += -DGEM5 ${GEM5_OPS} -O3 -fopenmp -static
+CC_INC = -I$(GEM5_INC)
+
+all: kmeans.exe
+
+kmeans.exe: cluster.c getopt.c kmeans.c kmeans_clustering.c
+	${CC} ${CC_FLAGS} $(CC_INC) $^ -o $@ -lm
+
+clean:
+	rm -f *.exe *.bc *.ll *.o output.txt

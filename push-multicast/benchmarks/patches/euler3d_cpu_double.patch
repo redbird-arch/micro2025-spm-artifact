@@ -1,0 +1,29 @@
+diff --git a/benchmarks/rodinia/openmp/cfd/euler3d_cpu_double.cpp b/benchmarks/rodinia/openmp/cfd/euler3d_cpu_double.cpp
+index 744169b..8034122 100755
+--- a/benchmarks/rodinia/openmp/cfd/euler3d_cpu_double.cpp
++++ b/benchmarks/rodinia/openmp/cfd/euler3d_cpu_double.cpp
+@@ -20,7 +20,7 @@ struct double3 {
+  *
+  */
+ #define GAMMA 1.4
+-#define iterations 2000
++//#define iterations 2000
+ 
+ #define NDIM 3
+ #define NNB 4
+@@ -411,12 +411,13 @@ void time_step(uint64_t j, uint64_t nelr, double *old_variables,
+  * Main function
+  */
+ int main(int argc, char **argv) {
+-  if (argc < 3) {
+-    std::cout << "<data file> <num of threads>" << std::endl;
++  if (argc < 4) {
++    std::cout << "<data file> <num of threads> <iterations>" << std::endl;
+     return 0;
+   }
+   const char *data_file_name = argv[1];
+   int num_threads = atoi(argv[2]);
++  int iterations = atoi(argv[3]);
+ 
+   // set far field conditions
+   {

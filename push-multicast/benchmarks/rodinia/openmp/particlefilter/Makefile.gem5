@@ -1,0 +1,17 @@
+# C compiler
+CC=clang
+
+# Disable slp vectorizer as it generates v4f64 which can't be handled by gem5.
+# CC_FLAGS = -fno-slp-vectorize -fno-vectorize -fno-unroll-loops
+
+include ../GemForge.Makefile.include
+
+CC_FLAGS += ${GEM_FORGE_TOP}/gem5/util/m5/m5op_x86.S
+
+all: particlefilter.exe
+
+%.exe: %.c
+	${CC} ${CC_FLAGS} $^ -o $@ -static -lm -lomp -ldl
+
+clean:
+	rm -f *.exe *.bc *.ll *.o result.txt

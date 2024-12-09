@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# gcc-gem5hooks.bldconf - configuration file for PARSEC
+
+source ${PARSECDIR}/pkgs/apps/facesim/parsec/gcc.bldconf
+
+build_env="$build_env EXTRA_LDFLAGS=\"-static\" LINK_FLAGS=\"${LINK_FLAGS} -static-libgcc\""
+
+# Package dependencies
+build_deps="gem5hooks"
+

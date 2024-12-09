@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# gcc-gem5hooks.bldconf - configuration file for PARSEC
+
+source ${PARSECDIR}/pkgs/apps/bodytrack/parsec/gcc.bldconf
+
+build_env="$build_env LTFLAGS=\"-all-static\""
+
+# Arguments to pass to the configure script, if it exists
+build_conf="$build_conf --disable-shared"
+
+# Package dependencies
+build_deps="gem5hooks"
+

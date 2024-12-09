@@ -1,0 +1,162 @@
+diff --git a/level0/cachebw/cachebw.c b/level0/cachebw/cachebw.c
+index 15f1e30..d42241c 100644
+--- a/level0/cachebw/cachebw.c
++++ b/level0/cachebw/cachebw.c
+@@ -27,7 +27,7 @@
+ ** SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.              **
+ ******************************************************************************/
+ 
+-#if 0 
++#if 0
+ #define USE_PERF_COUNTERS
+ #endif
+ 
+@@ -41,6 +41,10 @@
+ #include "./../common/perf_counter_markers.h"
+ #endif
+ 
++#ifdef GEM5
++#include "gem5/m5ops.h"
++#endif
++
+ #ifdef NTIMES
+ #if NTIMES<=1
+ #   define NTIMES	10000000
+@@ -124,7 +128,7 @@ inline double sec(struct timeval start, struct timeval end) {
+ 
+ inline void run_benchmark( double* i_data, size_t i_arraySize, size_t i_copies, size_t i_iters ) {
+   // we do manual reduction here as we don't rely on a smart OpenMP implementation
+-  #pragma omp parallel 
++  #pragma omp parallel
+   {
+ #ifdef _OPENMP
+     size_t l_tid = omp_get_thread_num();
+@@ -185,7 +189,7 @@ inline void run_benchmark( double* i_data, size_t i_arraySize, size_t i_copies,
+                              "ld1 {v31.2d}, [x0],16\n\t"
+                              "sub x1, x1, #64\n\t"
+                              "cbnz x1, 1b\n\t"
+-                        : : "r" (l_locAddr), "r" (l_parraySize) : "x0","x1","v0","v1","v2","v4","v5","v6","v7","v8","v9","v10","v11","v12","v13","v14","v15","v16","v17","v18","v19","v20","v21","v22","v23","v24","v25","v26","v27","v28","v29","v30","v31"); 
++                        : : "r" (l_locAddr), "r" (l_parraySize) : "x0","x1","v0","v1","v2","v4","v5","v6","v7","v8","v9","v10","v11","v12","v13","v14","v15","v16","v17","v18","v19","v20","v21","v22","v23","v24","v25","v26","v27","v28","v29","v30","v31");
+ #endif
+ #ifdef __AVX512F__
+       __asm__ __volatile__("movq %0, %%r8\n\t"
+@@ -301,8 +305,8 @@ inline void run_benchmark( double* i_data, size_t i_arraySize, size_t i_copies,
+                       : : "m"(l_locAddr), "m"(l_parraySize)  : "eax","ebx","xmm0","xmm1","xmm2","xmm3","xmm4","xmm5","xmm6","xmm7");
+ #endif
+       }
+-    } 
+-} 
++    }
++}
+ 
+ 
+ int main(int argc, char* argv[]) {
+@@ -324,38 +328,32 @@ int main(int argc, char* argv[]) {
+ #endif
+ 
+ 
+-  if (argc != 6) {
+-    printf("#doubles increase-factor increase-steps copies #reps\n");
++  if (argc != 7) {
++    printf("#doubles increase-factor increase-steps copies #reps #threads\n");
+     return -1;
+   }
+ 
+   l_arraySize_0 = atoi(argv[1]);
+   l_arrayFactor = atoi(argv[2]);
+-  l_arraySteps = atoi(argv[3]); 
++  l_arraySteps = atoi(argv[3]);
+   l_copies = atoi(argv[4]);
+   l_iters_0 = atoi(argv[5]);
+-
++  l_numThreads = atoi(argv[6]);
+ 
+ #ifdef _OPENMP
+-  #pragma omp parallel
+-  {
+-    #pragma omp master
+-    l_numThreads = omp_get_num_threads();
+-  }
+-#else
+-  l_numThreads = 1;
++  omp_set_num_threads(l_numThreads);
+ #endif
+ 
+   if (l_arraySize_0 % 256 != 0) {
+     printf("ERROR % 256\n");
+     exit(-1);
+   }
+-  
++
+   printf("Number of threads: %lld\n", l_numThreads);
+   printf("Using %i private Read Buffers\n", l_copies);
+   l_arraySize_0 *= l_copies;
+-  printf("KiB-per-core-read,GiB/s,Time\n");
+- 
++  printf("KiB-per-core-read,GiB/s,GiB-per-core/s,Time\n");
++
+   for ( i = 0 ; i < l_arraySteps; ++i ) {
+     double* l_data;
+     size_t l_n = 0;
+@@ -364,23 +362,38 @@ int main(int argc, char* argv[]) {
+     size_t l_arraySize = (i == 0) ? l_arraySize_0 : l_arraySize_0 * i * l_arrayFactor;
+     size_t l_iters = (i == 0) ? l_iters_0 : l_iters_0 / (i * l_arrayFactor);
+     double l_size = (double)((size_t)l_arraySize*sizeof(double));
++    if (l_iters == 0) break;
+     // init data
+     posix_memalign((void**)&l_data, 2097152, ((size_t)l_arraySize)*sizeof(double));;
+ 
++#ifdef GEM5
++    m5_switch_cpu();
++#endif
++
++    printf("Start warming up cache ...\n");
++
+     #pragma omp parallel for private(l_n)
+     for ( l_n = 0; l_n < l_arraySize; l_n++ ) {
+       l_data[l_n] = (double)l_n;
+     }
+ 
+     // pre-heat caches
+-    run_benchmark( l_data, l_arraySize, l_copies, 5 );
+-    
++    run_benchmark( l_data, l_arraySize, l_copies, 2 );
++
++    printf("Finished cache warmup.\n");
++
+     // run benchmark
+ #ifdef USE_PERF_COUNTERS
+     read_uncore_ctrs( &a );
+ #endif
+     gettimeofday(&l_startTime, NULL);
++#ifdef GEM5
++    m5_reset_stats(0, 0);
++#endif
+     run_benchmark( l_data, l_arraySize, l_copies, l_iters );
++#ifdef GEM5
++    m5_dump_reset_stats(0, 0);
++#endif
+     gettimeofday(&l_endTime, NULL);
+     l_avgTime = sec(l_startTime, l_endTime);
+ #ifdef USE_PERF_COUNTERS
+@@ -388,16 +401,16 @@ int main(int argc, char* argv[]) {
+     difa_uncore_ctrs( &a, &b, &s );
+     divi_uncore_ctrs( &s, l_iters );
+ #endif
+-    // postprocess timing 
++    // postprocess timing
+     l_avgTime /= (double)l_iters;
+-    
++
+     // output
+-    printf("%f,%f,%f\n", (l_size/l_copies)/1024.0, (((l_size/l_copies)*l_numThreads)/(1024.0*1024.0*1024.0))/l_avgTime, l_avgTime);
++    printf("%f,%f,%f,%f\n", (l_size/l_copies)/1024.0, (((l_size/l_copies)*l_numThreads)/(1024.0*1024.0*1024.0))/l_avgTime, (((l_size/l_copies))/(1024.0*1024.0*1024.0))/l_avgTime, l_avgTime);
+ #ifdef USE_PERF_COUNTERS
+     get_cas_ddr_bw_uncore_ctrs( &s, l_avgTime, &bw_cnt );
+     printf("%f,%f,%f,%f (counters)\n", (l_size/l_copies)/1024.0, bw_cnt.rd, bw_cnt.wr, l_avgTime);
+ #endif
+     free(l_data);
+   }
+-  return 0; 
++  return 0;
+ }

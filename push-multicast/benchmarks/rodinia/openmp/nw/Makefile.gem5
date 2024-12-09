@@ -1,0 +1,17 @@
+# C++ compiler
+CC=clang++
+
+include ../GemForge.Makefile.include
+
+# TODO: support -mavx512f (need to add VPMOVSXDQ instruction in gem5)
+#       support -mavx2 (need to add VPMULLD instruction in gem5)
+CC_FLAGS += ${GEM_FORGE_TOP}/gem5/util/m5/m5op_x86.S  -DGEM_FORGE_FIX_INPUT -msse4.2
+
+all: needle.exe
+
+needle.exe: needle.cpp
+	${CC} ${CC_FLAGS} $^ -o $@ -static -lm -lomp -ldl
+
+clean:
+	rm -f *.exe *.bc *.ll *.o output.txt
+

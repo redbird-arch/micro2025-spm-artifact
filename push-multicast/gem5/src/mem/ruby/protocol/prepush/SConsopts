@@ -1,0 +1,19 @@
+# -*- mode:python -*-
+
+import os
+
+Import('*')
+
+all_protocols.extend([
+    'MESI_Two_Level_Prepush',
+    'MESI_Three_Level_Prepush',
+    'MESI_Three_Level_Prepush_Feedback',
+    'MESI_Three_Level_Prepush_Feedback_Restart_Ratio',
+    'MESI_Three_Level_PrepushAck',
+    'MESI_Three_Level_PrepushAck_Bingo',
+    'MESI_Three_Level_PrepushAck_Feedback',
+    'MESI_Three_Level_PrepushAck_Feedback_Restart_Ratio',
+    'MESI_Three_Level_PrepushStream',
+    ])
+
+protocol_dirs.append(Dir('.').abspath)

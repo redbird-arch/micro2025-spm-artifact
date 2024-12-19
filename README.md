@@ -13,7 +13,6 @@ push-multicast-artifact/
 │   ├── delete-benchmark.sh               # script for deleting compiled benchmarks
 │   ├── gem5-compilation.sh               # script for compiling gem5
 │   ├── delete-gem5.sh                    # script for deleting compiled gem5
-│   ├── run-experiment.sh                 # script for running all experiments and generating results in m5out/
 │   ├── run-experiment-violin.sh          # script for running quick experiment and generating results in m5out/
 │   ├── run-experiment-remain.sh          # script for running remaining experiment and generating results in m5out/
 │   ├── delete-m5out.sh                   # script for deleting results in m5out/

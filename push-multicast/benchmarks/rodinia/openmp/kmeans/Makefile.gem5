@@ -1,8 +1,8 @@
 # C compiler
 CC=gcc
 
-GEM5_INC=${BENCH_TOP}/../nuca-gem5/include
-GEM5_OPS=${BENCH_TOP}/../nuca-gem5/util/m5/src/abi/x86/m5op.S
+GEM5_INC=${BENCH_TOP}/../gem5/include
+GEM5_OPS=${BENCH_TOP}/../gem5/util/m5/src/abi/x86/m5op.S
 
 # sse, sse2, see3 generate the same as no passing flags; sse4.2 generates
 # `pinsrd_pinsrq_Vdq_Ed_or_Eq_Ib` that are not implemented in gem5 (although

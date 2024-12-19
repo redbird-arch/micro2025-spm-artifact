@@ -1,8 +1,8 @@
 #gcc -fopenmp -mavx512f -Wall -O3 -I../common lud.c ../common/common.c lud_omp.c -o lud.exe -static
 CC=gcc
 
-GEM5_INC=${BENCH_TOP}/../nuca-gem5/include
-GEM5_OPS=${BENCH_TOP}/../nuca-gem5/util/m5/src/abi/x86/m5op.S
+GEM5_INC=${BENCH_TOP}/../gem5/include
+GEM5_OPS=${BENCH_TOP}/../gem5/util/m5/src/abi/x86/m5op.S
 
 CC_FLAGS += -DGEM5 ${GEM5_OPS} -O3 -fopenmp -static #-mavx512f
 CC_INC = -I./common -I$(GEM5_INC)

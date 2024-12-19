@@ -1,4 +1,0 @@
-#!/bin/bash
-python3 ./utils/run-experiment.py --gem5-dir=./gem5 --cpu-type=TunedCPU --l2-size=256kB --llc-slice-size=1MB --num-cpus=16 --link-width-bits=128 --sweep-thread-pool-size=32 --launch-experiments 'violin_stage1' --parsec-input 'large' --particlefilter-frames=2 --debug-flags='PseudoInst'
-python3 ./utils/run-experiment.py --gem5-dir=./gem5 --cpu-type=TunedCPU --l2-size=256kB --llc-slice-size=1MB --num-cpus=16 --link-width-bits=128 --sweep-thread-pool-size=32 --launch-experiments 'violin_stage2' --parsec-input 'large' --particlefilter-frames=2 --debug-flags='PseudoInst'
-python3 ./utils/run-experiment.py --gem5-dir=./gem5 --cpu-type=TunedCPU --l2-size=256kB --llc-slice-size=1MB --num-cpus=16 --link-width-bits=128 --sweep-thread-pool-size=32 --launch-experiments 'AE-all' --parsec-input 'large' --particlefilter-frames=2 --debug-flags='PseudoInst'

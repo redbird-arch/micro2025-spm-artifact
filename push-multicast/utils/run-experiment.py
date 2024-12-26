@@ -396,7 +396,7 @@ def get_benchmark_cmd_options(args):
         elif parsec_input == "medium":
             options = f"-c -p -v -t {num_cpus} " + \
                     f"-i {parsec_input_dir}/dedup/medium_media.dat " + \
-                    f"-o {parsec_run_dir}/dedup/{scheme}_medium_output.dat.ddp"           
+                    f"-o {parsec_run_dir}/dedup/{scheme}_medium_output.dat.ddp"
         else:
             assert parsec_input == "large"
             options = f"-c -p -v -t {num_cpus} " + \
@@ -691,7 +691,7 @@ def launch_experiments(args):
 
                 if args.launch_experiments == "violin":
                     schemes = ["baseline"]
-                    
+
                 args.gem5 = f"./gem5/build/X86_MESI_Three_Level_PrepushAck/gem5.opt"
                 # Baseline
                 if "baseline" in schemes:
@@ -760,7 +760,7 @@ def launch_experiments(args):
 
                 if args.launch_experiments == "violin":
                     schemes = ["baseline"]
-                    
+
                 args.gem5 = f"./gem5/build/X86_MESI_Three_Level_PrepushAck/gem5.opt"
                 # Baseline
                 if "baseline" in schemes:
@@ -777,8 +777,18 @@ def launch_experiments(args):
 
                     for i in range(runs_per_scheme):
                         args_list.append(baseline_list[i])
-        
+
     if (args.launch_experiments == "AE-all"):
+        parsec_run_dir = f"{os.getcwd()}/benchmarks/runs/parsec"
+        if not os.path.exists(parsec_run_dir):
+            os.makedirs(parsec_run_dir)
+            blackscholes_run_dir = f"{parsec_run_dir}/blackscholes"
+            if not os.path.exists(blackscholes_run_dir):
+                os.makedirs(blackscholes_run_dir)
+            fluidanimate_run_dir = f"{parsec_run_dir}/fluidanimate"
+            if not os.path.exists(fluidanimate_run_dir):
+                os.makedirs(fluidanimate_run_dir)
+
         if (1):
             for runs in ["sensitivity"]:
                 for sensitivity_type in ["TPC", "TimeWindow"]:
@@ -796,7 +806,7 @@ def launch_experiments(args):
 
                             if args.launch_experiments == "sensitivity":
                                 schemes = ["prepush-multicast-feedback-restart-ratio"]
-                                
+
                             args.gem5 = f"./gem5/build/X86_MESI_Three_Level_Prepush_Feedback_Restart_Ratio/gem5.opt"
                             # Feedback
                             if "prepush-multicast-feedback-restart-ratio" in schemes:
@@ -827,7 +837,7 @@ def launch_experiments(args):
 
                             if args.launch_experiments == "sensitivity":
                                 schemes = ["prepush-multicast-feedback-restart-ratio"]
-                                
+
                             args.gem5 = f"./gem5/build/X86_MESI_Three_Level_Prepush_Feedback_Restart_Ratio/gem5.opt"
                             # Feedback
                             if "prepush-multicast-feedback-restart-ratio" in schemes:
@@ -863,7 +873,7 @@ def launch_experiments(args):
                     if args.launch_experiments == "cache-size":
                         schemes = ["baseline", "bingo", "prepush-multicast-feedback-restart-ratio",
                                     "prepush-ack-multicast-feedback-restart-ratio"]
-                    
+
                     args.gem5 = f"{args.gem5_dir}/build/X86_MESI_Three_Level_PrepushAck_Bingo/gem5.opt"
                     # Bingo
                     if "bingo" in schemes:
@@ -874,7 +884,7 @@ def launch_experiments(args):
                         args.prepush_filter_nodrop = False
                         args.noc_coherence_constraint = "unordered"
                         bingo_list = configure_experiments(args, "bingo")
-                        
+
                     args.gem5 = f"./gem5/build/X86_MESI_Three_Level_Prepush_Feedback_Restart_Ratio/gem5.opt"
                     # Feedback
                     if "prepush-multicast-feedback-restart-ratio" in schemes:
@@ -934,7 +944,7 @@ def launch_experiments(args):
                     if args.launch_experiments == "link-study":
                         schemes = ["baseline", "bingo", "prepush-multicast-feedback-restart-ratio",
                                 "prepush-ack-multicast-feedback-restart-ratio"]
-                        
+
                     args.gem5 = f"./gem5/build/X86_MESI_Three_Level_Prepush_Feedback_Restart_Ratio/gem5.opt"
                     # Feedback
                     if "prepush-multicast-feedback-restart-ratio" in schemes:
@@ -1020,8 +1030,9 @@ def launch_experiments(args):
                         args.prepush_filter = False #False
                         args.prepush_filter_nodrop = False
                         args.noc_coherence_constraint = "unordered"
+                        args.scheme_name = f"bingo-{loop_cpu}cpus"
                         bingo_list = configure_experiments(args, "bingo")
-                    
+
                     args.gem5 = f"./gem5/build/X86_MESI_Three_Level_Prepush_Feedback_Restart_Ratio/gem5.opt"
 
                     # Feedback
@@ -1032,6 +1043,7 @@ def launch_experiments(args):
                         args.prepush_filter = True
                         args.prepush_filter_nodrop = False
                         args.noc_coherence_constraint = "ordered-prepush-inv"
+                        args.scheme_name = f"prepush-multicast-feedback-restart-ratio-{loop_cpu}cpus"
                         prepush_feedback_restart_ratio_list = configure_experiments(args, "prepush-multicast-feedback-restart-ratio")
 
                     args.gem5 = f"./gem5/build/X86_MESI_Three_Level_PrepushAck_Feedback_Restart_Ratio/gem5.opt"
@@ -1044,6 +1056,7 @@ def launch_experiments(args):
                         args.prepush_filter = True
                         args.prepush_filter_nodrop = False
                         args.noc_coherence_constraint = "unordered"
+                        args.scheme_name = f"prepush-ack-multicast-feedback-restart-ratio-{loop_cpu}cpus"
                         prepush_ack_feedback_restart_ratio_list = configure_experiments(args, "prepush-ack-multicast-feedback-restart-ratio")
 
                     args.gem5 = f"./gem5/build/X86_MESI_Three_Level_PrepushAck/gem5.opt"
@@ -1056,6 +1069,7 @@ def launch_experiments(args):
                         args.prepush_filter = False
                         args.prepush_filter_nodrop = False
                         args.noc_coherence_constraint = "unordered"
+                        args.scheme_name = f"baseline-{loop_cpu}cpus"
                         baseline_list = configure_experiments(args, "baseline")
 
                     # Coalescing-Multicast
@@ -1066,11 +1080,12 @@ def launch_experiments(args):
                         args.prepush_filter = False
                         args.prepush_filter_nodrop = False
                         args.noc_coherence_constraint = "unordered"
+                        args.scheme_name = f"coalescing-multicast-{loop_cpu}cpus"
                         coalescing_multicast_list = \
                                 configure_experiments(args, "coalescing-multicast")
 
                     args.gem5 = f"./gem5/build/X86_MESI_Three_Level_Prepush/gem5.opt"
-                    
+
                     if "prepush-only" in schemes:
                         args.coalescing = False
                         args.prepush = True
@@ -1078,6 +1093,7 @@ def launch_experiments(args):
                         args.prepush_filter = True
                         args.prepush_filter_nodrop = True
                         args.noc_coherence_constraint = "ordered-prepush-inv"
+                        args.scheme_name = f"prepush-only-{loop_cpu}cpus"
                         prepush_only_list = configure_experiments(args, "prepush-only")
 
                     if "prepush-multicast" in schemes:
@@ -1087,6 +1103,7 @@ def launch_experiments(args):
                         args.prepush_filter = True
                         args.prepush_filter_nodrop = True
                         args.noc_coherence_constraint = "ordered-prepush-inv"
+                        args.scheme_name = f"prepush-multicast-{loop_cpu}cpus"
                         prepush_multicast_list = configure_experiments(args, "prepush-multicast")
 
                     # Prepush-Multicast-Filtering with ordered Prepush-Inv NoC
@@ -1097,9 +1114,10 @@ def launch_experiments(args):
                         args.prepush_filter = True #True
                         args.prepush_filter_nodrop = False
                         args.noc_coherence_constraint = "ordered-prepush-inv"
+                        args.scheme_name = f"prepush-multicast-filter-{loop_cpu}cpus"
                         prepush_multicast_filter_list = \
                                 configure_experiments(args, "prepush-multicast-filter")
-                    
+
                     if args.launch_experiments == "all-speedup":
                         runs_per_scheme = len(baseline_list)
                         assert len(prepush_only_list) == runs_per_scheme and \

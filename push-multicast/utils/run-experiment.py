@@ -184,8 +184,9 @@ def get_benchmark_cmd_options(args):
     assert os.path.exists(parsec_bin_dir)
     parsec_input_dir = f"{os.getcwd()}/benchmarks/inputs/parsec"
     assert os.path.exists(parsec_input_dir)
-    parsec_run_dir = f"{os.getcwd()}/benchmarks/runs/parsec"
-    assert os.path.exists(parsec_run_dir)
+    if args.launch_experiments == "all-speedup":
+        parsec_run_dir = f"{os.getcwd()}/benchmarks/runs/parsec"
+        assert os.path.exists(parsec_run_dir)
     parsec_input = args.parsec_input
 
     rodinia_data = "./benchmarks/rodinia/data"

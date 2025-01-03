@@ -34,7 +34,7 @@ python3 ./utils/process-stats.py --benchmark-list conv3dfoowarm bfs --benchmark-
 cp figures/TimeWindow/speedup-overPrefetcher.pdf ./figures/reproduce/Fig_17_b.pdf
 
 mkdir figures/linkstudy
-python3 ./utils/process-stats.py --benchmark-list cachebw readbw_multilevel backprop particlefilter-2fr conv3dfoowarm mlp mv lud pathfinder bfs --benchmark-names cachebw multilevel backprop particlefilter conv3d mlp mv lud pathfinder bfs --scheme-list baseline prepush-ack-multicast-feedback-restart-ratio prepush-multicast-feedback-restart-ratio --scheme-names Baseline PushAck OrdPush --link-widths 64 128 256 512 --m5out-dir ./m5out/AE-result/256kB --fig-dir ./figures/linkstudy --plot --print-csv --action runtime-link-widths --ncpu 16
+python3 ./utils/process-stats.py --benchmark-list cachebw readbw_multilevel backprop particlefilter-2fr conv3dfoowarm mlp mv lud pathfinder bfs --benchmark-names cachebw multilevel backprop particlefilter conv3d mlp mv lud pathfinder bfs --scheme-list bingo prepush-ack-multicast-feedback-restart-ratio prepush-multicast-feedback-restart-ratio --scheme-names L1Bingo-L2Stride PushAck OrdPush --link-widths 64 128 256 512 --m5out-dir ./m5out/AE-result/256kB --fig-dir ./figures/linkstudy --plot --print-csv --action runtime-link-widths --ncpu 16
 cp figures/linkstudy/all-speedup-link-widths.pdf ./figures/reproduce/Fig_18.pdf
 
 mkdir figures/cachesize-study

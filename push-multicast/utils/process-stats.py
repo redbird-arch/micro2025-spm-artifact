@@ -1999,14 +1999,14 @@ def process_paper_runtime_link_widths(args):
                     #results["normalized-runtime-link-widths"][scheme][l][b] = \
                     #        sim_seconds / baseline_runtime
                     results["normalized-runtime-link-widths"][scheme][l][b] = \
-                            sim_seconds / results["runtime-link-widths"]["baseline"][benchmark][link_width]
+                            sim_seconds / results["runtime-link-widths"]["bingo"][benchmark][link_width]
                     if sim_seconds == 0:
                         results["speedup-link-widths"][scheme][l][b] = 0
                     else:
                         #results["speedup-link-widths"][scheme][l][b] = \
                         #        baseline_runtime / sim_seconds
                         results["speedup-link-widths"][scheme][l][b] = \
-                                results["runtime-link-widths"]["baseline"][benchmark][link_width] / sim_seconds
+                                results["runtime-link-widths"]["bingo"][benchmark][link_width] / sim_seconds
 
                     statsfile.close()
 

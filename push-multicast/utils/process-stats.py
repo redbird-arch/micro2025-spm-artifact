@@ -3089,7 +3089,7 @@ def plot_runtime(args, results):
         plt.show()
 
 def plot_runtime_and_miss_for_all_cpus(args, results):
-    colors = ['#386cb0', '#fdc086', '#f0027f', '#bf5b17', '#beaed4', \
+    colors = ['#386cb0', '#fdc086', '#f0027f', '#7fc97f', '#bf5b17', '#beaed4', \
               '#7fc97f', '#666666', '#ffff99']
 
     num_benchmarks = len(args.benchmark_list)
@@ -5947,7 +5947,7 @@ def plot_link_load(args, results):
 
 
 def plot_runtime_link_widths(args, results):
-    colors = ['#386cb0', '#fdc086', '#f0027f', '#beaed4', \
+    colors = ['#386cb0', '#fdc086', '#f0027f', '#7fc97f', '#beaed4', \
               '#7fc97f', '#bf5b17', '#666666', '#ffff99', "#FFBE7A", "#8ECFC9", "#FA7F6F", "#82B0D2", "#BEB8DC", "#E7DAD2"]
 
     num_benchmarks = len(args.benchmark_list)

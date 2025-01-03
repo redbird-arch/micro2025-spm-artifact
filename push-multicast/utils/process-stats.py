@@ -2852,7 +2852,7 @@ def plot_interval_distribution(args, results):
             font=("family", "Tw Cen MT"))
     ax = fig.gca()
     g = sns.violinplot(x="Consecutive Access Pair", y="Access Interval (Cycle)",
-            data=access_df, ax=ax, palette=access_colors)
+            data=access_df, ax=ax, palette=access_colors, width=1)
     ax.yaxis.grid(True, linestyle='--', color='k')
     ax.set_ylabel(f"{Iter}Access Interval (Cycle)")
     fig.subplots_adjust(left=0.08, right=0.99)
@@ -3561,7 +3561,7 @@ def plot_runtime_and_miss_for_all_cpus(args, results):
 
     figname = f"{args.fig_dir}/all-cpus-speedup-mpki-categories-overBingo.pdf"
     #figsize = (12, 5)
-    figsize = (20, 4.5)
+    figsize = (20, 5)
     pdfpage, fig = pdf.plot_setup(figname, figsize=figsize, fontsize=20,
             font=("family", "Tw Cen MT"))
 
@@ -3626,11 +3626,11 @@ def plot_runtime_and_miss_for_all_cpus(args, results):
             handletextpad=0.2,
             columnspacing=0.6)
 
-    fig.subplots_adjust(bottom=0.25, top=0.8)
+    fig.subplots_adjust(bottom=0.35, top=0.9)
 
     ly = len_num_cpus
     scale = 1. / ly
-    ypos = -.40
+    ypos = -.5
     for pos in range(0, ly + 1):
         lxpos = (pos + 0.5) * scale
         if pos < ly:
@@ -4030,7 +4030,7 @@ def plot_traffic(args, results):
     # xticks and labels
     ly = len(args.benchmark_list)
     scale = 1. / ly
-    ypos = -.68
+    ypos = -1.1
     pos = 0
     xlabels = args.benchmark_names
     for pos in range(ly + 1):
@@ -4360,7 +4360,7 @@ def plot_traffic(args, results):
     # xticks and labels
     ly = len(args.benchmark_list)
     scale = 1. / ly
-    ypos = -.5
+    ypos = -.85
     pos = 0
     xlabels = args.benchmark_names
     for pos in range(ly + 1):
@@ -4457,7 +4457,7 @@ def plot_traffic(args, results):
     # xticks and labels
     ly = len(args.benchmark_list)
     scale = 1. / ly
-    ypos = -.5
+    ypos = -.85
     pos = 0
     xlabels = args.benchmark_names
     for pos in range(ly + 1):

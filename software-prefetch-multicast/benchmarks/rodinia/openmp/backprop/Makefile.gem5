@@ -1,0 +1,20 @@
+# C compiler
+CC=clang
+
+include ../GemForge.Makefile.include
+
+CC_FLAGS += ${GEM_FORGE_TOP}/gem5/util/m5/m5op_x86.S
+
+all: backprop.exe backprop-prefetch-16core.exe backprop-prefetch-64core.exe
+
+backprop.exe: backprop.c facetrain.c imagenet.c backprop_kernel.c
+	$(CC) $(CC_FLAGS) -g $^ -o backprop.exe -static -lm -lomp -ldl
+
+backprop-prefetch-16core.exe: backprop-prefetch-16core.c facetrain.c imagenet.c backprop_kernel.c
+	$(CC) $(CC_FLAGS) -g $^ -o backprop-prefetch-16core.exe -static -lm -lomp -ldl
+
+backprop-prefetch-64core.exe: backprop-prefetch-64core.c facetrain.c imagenet.c backprop_kernel.c
+	$(CC) $(CC_FLAGS) -g $^ -o backprop-prefetch-64core.exe -static -lm -lomp -ldl
+
+clean:
+	rm -f *.exe *.bc *.ll *.o output.txt

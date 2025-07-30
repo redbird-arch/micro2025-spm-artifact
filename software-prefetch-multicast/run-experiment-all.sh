@@ -1,0 +1,2 @@
+#!/bin/bash
+python3 ./utils/run-experiment.py --gem5-dir=./gem5 --cpu-type=TunedCPU --l2-size=256kB --llc-slice-size=1MB --num-cpus=16 --link-width-bits=128 --sweep-thread-pool-size=64 --launch-experiments 'all-speedup' --particlefilter-frames=2 --debug-flags='PseudoInst'

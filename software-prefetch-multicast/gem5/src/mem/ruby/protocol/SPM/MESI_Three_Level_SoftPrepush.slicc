@@ -1,0 +1,9 @@
+protocol "MESI_Three_Level_SoftPrepush";
+include "RubySlicc_SoftPrepush_interfaces.slicc";
+include "MESI_Two_Level_SoftPrepush-msg.sm";
+include "MESI_Three_Level_SoftPrepush-msg.sm";
+include "MESI_Three_Level_SoftPrepush-L0cache.sm";
+include "MESI_Three_Level_SoftPrepush-L1cache.sm";
+include "MESI_Two_Level_SoftPrepush-L2cache.sm";
+include "MESI_Two_Level_SoftPrepush-dir.sm";
+include "MESI_Two_Level-dma.sm";

@@ -1,0 +1,11 @@
+# -*- mode:python -*-
+
+import os
+
+Import('*')
+
+all_protocols.extend([
+    'MESI_Three_Level_SoftPrepush',
+    ])
+
+protocol_dirs.append(Dir('.').abspath)

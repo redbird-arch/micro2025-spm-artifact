@@ -1,4 +1,0 @@
-TARGET_ISA = 'x86'
-CPU_MODELS = 'TimingSimpleCPU,O3CPU,AtomicSimpleCPU'
-PROTOCOL = 'MESI_Three_Level_PrepushStream'
-NUMBER_BITS_PER_SET = '128'

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker stop PrepushMulticast-Docker
-docker rm PrepushMulticast-Docker
+docker stop SPM-Docker
+docker rm SPM-Docker

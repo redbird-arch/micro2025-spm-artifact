@@ -196,45 +196,45 @@ def create_system(options, full_system, system, dma_ports, bootmem,
         in_EndPC = 0x404b8e
         num_of_groups = 4
     elif options.benchmark_num == 3: # mv
-        in_PC1  = 0x4021f0
+        in_PC1  = 0x402210
         if options.num_cpus == 64:
             num_of_groups = 4
     elif options.benchmark_num == 4: # conv3d
-        in_PC1 = 0x40231b
+        in_PC1 = 0x40233b
     elif options.benchmark_num == 5: # mlp
-        in_PC1  = 0x403f54 # Share Input, Input only
-        in_PC2  = 0x403f62
-        in_PC3  = 0x403f6f
-        in_PC4  = 0x403f7c
-        in_PC5  = 0x403f89
-        in_PC6  = 0x403f96
-        in_PC7  = 0x403fa0
-        in_PC8  = 0x403faa
-        in_PC9  = 0x403fb4
-        in_PC10 = 0x403fbe
-        in_PC11 = 0x403fc8
-        in_PC12 = 0x403fd2
-        in_PC13 = 0x403fdc
-        in_PC14 = 0x403fe6
-        in_PC15 = 0x403ff0
-        in_PC16 = 0x403ff5
+        in_PC1  = 0x403f74 # Share Input, Input only
+        in_PC2  = 0x403f82
+        in_PC3  = 0x403f8f
+        in_PC4  = 0x403f9c
+        in_PC5  = 0x403fa9
+        in_PC6  = 0x403fb6
+        in_PC7  = 0x403fc0
+        in_PC8  = 0x403fca
+        in_PC9  = 0x403fd4
+        in_PC10 = 0x403fde
+        in_PC11 = 0x403fe8
+        in_PC12 = 0x403ff2
+        in_PC13 = 0x403ffc
+        in_PC14 = 0x404006
+        in_PC15 = 0x404010
+        in_PC16 = 0x404015
     elif options.benchmark_num == 6: # backprop
         if options.num_cpus == 16:
-            in_PC1  = 0x402ec0
-            in_PC2  = 0x402ede
-            in_PC3  = 0x402f22
-            in_PC4  = 0x4033a0
+            in_PC1  = 0x402ee0
+            in_PC2  = 0x402efe
+            in_PC3  = 0x402f42
+            in_PC4  = 0x4033c0
         if options.num_cpus == 64:
-            in_PC1  = 0x402ec0
-            in_PC2  = 0x402ede
-            in_PC3  = 0x402f22
-            in_PC4  = 0x4033a0
+            in_PC1  = 0x402ee0
+            in_PC2  = 0x402efe
+            in_PC3  = 0x402f42
+            in_PC4  = 0x4033c0
             num_of_groups = 4
     elif options.benchmark_num == 7: # particlefilter
-        in_PC1  = 0x403530
-        in_PC2  = 0x403c60
-        in_PC3  = 0x403c65
-        in_PC4  = 0x404d60
+        in_PC1  = 0x403550
+        in_PC2  = 0x403c80
+        in_PC3  = 0x403c85
+        in_PC4  = 0x404d80
 
     #
     # Must create the individual controllers before the network to ensure the

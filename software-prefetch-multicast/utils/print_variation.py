@@ -21,7 +21,7 @@ for i in range(16):
 with open(filename, "r") as statsfile:
     for line in statsfile:
         if "L1_GetS!!" in line:
-            if "L1_GetS!!: addr = 0x1b8d00 , pc = 0x403569" in line:
+            if "L1_GetS!!: addr = 0x1b7d00 , pc = 0x403483" in line:
                 newline = line.split()
                 for i in range(16):
                     if (newline[2] == "system.ruby.l1_cntrl" + str(i) + ":"):

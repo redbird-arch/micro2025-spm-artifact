@@ -853,7 +853,7 @@ class AbstractController : public ClockedObject, public Consumer
 
 
   virtual void l1_print_GetS(MachineID m_id, Addr addr, Addr pc) {
-    if ((addr == 0x1b8d00) && (pc == 0x403569)) {
+    if (addr == 0x1b7d00) {
       warn("%lld: %s: Cycles: %lld ; L1_GetS!!: addr = 0x%x , pc = 0x%x !!\n", curTick(), name(), curTick()/500, addr, pc);
     }
   }
